@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>robloxmod</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       background: #000;
@@ -10,6 +11,9 @@
       font-family: 'Tahoma', sans-serif;
       text-align: center;
       padding: 50px 10px;
+      margin: 0;
+      min-height: 100vh;
+      box-sizing: border-box;
     }
 
     .step {
@@ -21,11 +25,13 @@
       border-radius: 12px;
       padding: 15px 20px;
       margin: 15px auto;
-      width: 350px;
+      width: 100%;
+      max-width: 350px;
       box-shadow: 0 0 10px #0ff2;
       opacity: 0.4;
       pointer-events: none;
       transition: 0.3s;
+      box-sizing: border-box;
     }
 
     .step.active {
@@ -92,9 +98,11 @@
       border-radius: 12px;
       border: 2px solid #444;
       padding: 15px 10px;
-      width: 380px;
+      width: 100%;
+      max-width: 380px;
       margin: auto;
       box-shadow: 0 0 10px #0ff3;
+      box-sizing: border-box;
     }
 
     .final-buttons a {
@@ -106,11 +114,13 @@
       font-size: 16px;
       font-weight: bold;
       margin: 10px auto;
-      width: 350px;
+      width: 100%;
+      max-width: 350px;
       text-align: center;
       pointer-events: none;
       opacity: 0.5;
       transition: 0.3s;
+      box-sizing: border-box;
     }
 
     .final-buttons a.active {
@@ -122,77 +132,83 @@
     .final-buttons a#btnRobux.active {
       background-color: dodgerblue;
     }
+
+    /* Responsive design */
+    @media (max-width: 480px) {
+      body {
+        padding: 20px 2vw;
+      }
+      .step, .final-buttons {
+        max-width: 100%;
+        width: 100%;
+        padding: 12px 5vw;
+      }
+      .final-buttons a {
+        max-width: 100%;
+        width: 100%;
+        font-size: 15px;
+        padding: 12px 5px;
+      }
+      h2 {
+        font-size: 19px;
+        margin-bottom: 18px;
+      }
+      .final-message {
+        font-size: 15px;
+      }
+      .step span {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 340px) {
+      .step, .final-buttons {
+        padding: 8px 0;
+      }
+      .step span, .final-buttons a, .final-message {
+        font-size: 12px;
+      }
+    }
   </style>
 </head>
 <body>
 
   <h2>Complete these steps first to unlock the download links</h2>
 
-
-
   <div id="step1" class="step active">
-  <a href="#"
-     onclick="completeStep(1, 'https://www.youtube.com/@MRGAMESFF-k3q'); return false;"
-     style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
-    
-    <!-- السهم على اليمين -->
-    <span id="check1">➡️</span>
-
-    <!-- النص الإنجليزي مع الإيموجي بداخله، بترتيب LTR ثابت -->
-    <span style="direction: ltr; display: flex; align-items: center; gap: 6px;">
-    <span style="white-space: nowrap;">📺🔔</span>
-    <span>Click here to subscribe to Channel 1, and turn on the notification bell</span>
-   </span>
-
-
-    </a>
-   </div>
-
-
-
-
-
-  <div id="step2" class="step">
-  <a href="#"
-     onclick="completeStep(2, 'https://www.youtube.com/@DarkPanda-DP'); return false;"
-     style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
-    
-    <!-- السهم على اليمين -->
-    <span id="check2">➡️</span>
-
-    <!-- النص الإنجليزي مع الإيموجي بداخله، بترتيب LTR ثابت -->
-    <span style="direction: ltr; display: flex; align-items: center; gap: 6px;">
-    <span style="white-space: nowrap;">📺🔔</span>
-    <span>Click here to subscribe to Channel 2, and turn on the notification bell</span>
-   </span>
-
-
-    </a>
-   </div>
-
-
-
-  <div id="step3" class="step">
-    <a href="#" onclick="rotateStepLinks(3); return false;"
-    style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
-
-    <!-- السهم على اليمين -->
-    <span id="check3">➡️</span>
-
-
-      <!-- النص الإنجليزي مع الإيموجي بداخله، بترتيب LTR ثابت -->
-    <span style="direction: ltr; display: flex; align-items: center; gap: 6px;">
-    <span style="white-space: nowrap;">👍💬</span>
-    <span>Click here to like the video you see, and leave a comment</span>
-   </span>
-
+    <a href="#"
+       onclick="completeStep(1, 'https://www.youtube.com/@MRGAMESFF-k3q'); return false;"
+       style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+      <span id="check1">➡️</span>
+      <span style="direction: ltr; display: flex; align-items: center; gap: 6px;">
+        <span style="white-space: nowrap;">📺🔔</span>
+        <span>Click here to subscribe to Channel 1, and turn on the notification bell</span>
+      </span>
     </a>
   </div>
 
+  <div id="step2" class="step">
+    <a href="#"
+       onclick="completeStep(2, 'https://www.youtube.com/@DarkPanda-DP'); return false;"
+       style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+      <span id="check2">➡️</span>
+      <span style="direction: ltr; display: flex; align-items: center; gap: 6px;">
+        <span style="white-space: nowrap;">📺🔔</span>
+        <span>Click here to subscribe to Channel 2, and turn on the notification bell</span>
+      </span>
+    </a>
+  </div>
 
-
-
-
+  <div id="step3" class="step">
+    <a href="#" onclick="rotateStepLinks(3); return false;"
+      style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+      <span id="check3">➡️</span>
+      <span style="direction: ltr; display: flex; align-items: center; gap: 6px;">
+        <span style="white-space: nowrap;">👍💬</span>
+        <span>Click here to like the video you see, and leave a comment</span>
+      </span>
+    </a>
+  </div>
 
   <div class="final-section">
     <div id="finalMessage" class="final-message">❌ Complete the steps first to unlock the download links</div>
@@ -238,25 +254,23 @@
     }
 
     function unlockButtons() {
-  const allCompleted = [...Array(3).keys()].every(i =>
-    document.getElementById('step' + (i + 1)).classList.contains('completed')
-  );
-  if (allCompleted) {
-    document.getElementById('finalMessage').innerText = '✅ All steps have been completed successfully';
-    document.getElementById('finalMessage').style.color = 'lime';
+      const allCompleted = [...Array(3).keys()].every(i =>
+        document.getElementById('step' + (i + 1)).classList.contains('completed')
+      );
+      if (allCompleted) {
+        document.getElementById('finalMessage').innerText = '✅ All steps have been completed successfully';
+        document.getElementById('finalMessage').style.color = 'lime';
 
-    const btnDownload = document.getElementById('btnDownload');
-   const btnRobux = document.getElementById('btnRobux');
+        const btnDownload = document.getElementById('btnDownload');
+        const btnRobux = document.getElementById('btnRobux');
 
-    btnDownload.classList.add('active');
-    btnRobux.classList.add('active');
+        btnDownload.classList.add('active');
+        btnRobux.classList.add('active');
 
-    // تغيير القفل المغلق إلى مفتوح
-    btnDownload.innerText = '🔓 Click here to download Roblox mod';
-    btnRobux.innerText = '🔓 Click here to learn how to get free Robux';
-  }
-}
-
+        btnDownload.innerText = '🔓 Click here to download Roblox mod';
+        btnRobux.innerText = '🔓 Click here to learn how to get free Robux';
+      }
+    }
 
     function goToDownload() {
       window.open('https://linkjust.com/eYX2RE', '_blank');
