@@ -4,20 +4,55 @@
   <meta charset="UTF-8">
   <title>robloxmod</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
-    body {
-      background: #000;
-      color: white;
-      font-family: 'Tahoma', sans-serif;
-      text-align: center;
-      padding: 50px 10px;
-      margin: 0;
-      min-height: 100vh;
+    * {
       box-sizing: border-box;
     }
 
+    body {
+      margin: 0;
+      font-family: 'Tahoma', sans-serif;
+      color: white;
+      text-align: center;
+      min-height: 100vh;
+      padding: 50px 10px;
+      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1a2a6c);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #0ff;
+    }
+
+    .progress-bar-container {
+      width: 90%;
+      max-width: 360px;
+      height: 10px;
+      background: #333;
+      border-radius: 10px;
+      margin: 20px auto;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: lime;
+      transition: width 0.4s ease;
+    }
+
     .step {
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: space-between;
       background: #111;
@@ -27,16 +62,14 @@
       margin: 15px auto;
       width: 100%;
       max-width: 350px;
-      box-shadow: 0 0 10px #0ff2;
-      opacity: 0.4;
-      pointer-events: none;
-      transition: 0.3s;
-      box-sizing: border-box;
+      box-shadow: 0 0 10px #0ff4;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
     }
 
     .step.active {
-      opacity: 1;
-      pointer-events: auto;
+      display: flex;
     }
 
     .step.completed {
@@ -44,13 +77,9 @@
       background-color: #141414;
     }
 
-    .step span {
-      text-align: right;
-      font-size: 16px;
-    }
-
-    .check {
-      font-size: 20px;
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     a {
@@ -60,12 +89,6 @@
       align-items: center;
       width: 100%;
       justify-content: space-between;
-    }
-
-    h2 {
-      font-size: 24px;
-      margin-bottom: 30px;
-      color: #0ff;
     }
 
     .loading {
@@ -98,11 +121,9 @@
       border-radius: 12px;
       border: 2px solid #444;
       padding: 15px 10px;
-      width: 100%;
       max-width: 380px;
       margin: auto;
       box-shadow: 0 0 10px #0ff3;
-      box-sizing: border-box;
     }
 
     .final-buttons a {
@@ -120,7 +141,6 @@
       pointer-events: none;
       opacity: 0.5;
       transition: 0.3s;
-      box-sizing: border-box;
     }
 
     .final-buttons a.active {
@@ -133,88 +153,61 @@
       background-color: dodgerblue;
     }
 
-    /* Responsive design */
     @media (max-width: 480px) {
       body {
         padding: 20px 2vw;
       }
       .step, .final-buttons {
         max-width: 100%;
-        width: 100%;
         padding: 12px 5vw;
       }
       .final-buttons a {
-        max-width: 100%;
-        width: 100%;
         font-size: 15px;
         padding: 12px 5px;
       }
       h2 {
-        font-size: 19px;
-        margin-bottom: 18px;
+        font-size: 20px;
       }
       .final-message {
         font-size: 15px;
-      }
-      .step span {
-        font-size: 14px;
-      }
-    }
-
-    @media (max-width: 340px) {
-      .step, .final-buttons {
-        padding: 8px 0;
-      }
-      .step span, .final-buttons a, .final-message {
-        font-size: 12px;
       }
     }
   </style>
 </head>
 <body>
 
-  <h2>Complete these steps first to unlock the download links</h2>
+  <h2>Complete these steps to unlock the download links</h2>
+
+  <div class="progress-bar-container">
+    <div id="progressBar" class="progress-bar"></div>
+  </div>
 
   <div id="step1" class="step active">
-    <a href="#"
-       onclick="completeStep(1, 'https://www.youtube.com/@MRGAMESFF-k3q'); return false;"
-       style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+    <a href="#" onclick="completeStep(1, 'https://www.youtube.com/@MRGAMESFF-k3q'); return false;">
       <span id="check1">➡️</span>
-      <span style="direction: ltr; display: flex; align-items: center; gap: 6px;">
-        <span style="white-space: nowrap;">📺🔔</span>
-        <span>Click here to subscribe to Channel 1, and turn on the notification bell</span>
-      </span>
+      <span style="direction: ltr;">📺🔔 Subscribe to Channel 1, and turn on the notification bell </span>
     </a>
   </div>
 
   <div id="step2" class="step">
-    <a href="#"
-       onclick="completeStep(2, 'https://www.youtube.com/@DarkPanda-DP'); return false;"
-       style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+    <a href="#" onclick="completeStep(2, 'https://www.youtube.com/@DarkPanda-DP'); return false;">
       <span id="check2">➡️</span>
-      <span style="direction: ltr; display: flex; align-items: center; gap: 6px;">
-        <span style="white-space: nowrap;">📺🔔</span>
-        <span>Click here to subscribe to Channel 2, and turn on the notification bell</span>
-      </span>
+      <span style="direction: ltr;">📺🔔 Subscribe to Channel 2, and turn on the notification bell</span>
     </a>
   </div>
 
   <div id="step3" class="step">
-    <a href="#" onclick="rotateStepLinks(3); return false;"
-      style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+    <a href="#" onclick="rotateStepLinks(3); return false;">
       <span id="check3">➡️</span>
-      <span style="direction: ltr; display: flex; align-items: center; gap: 6px;">
-        <span style="white-space: nowrap;">👍💬</span>
-        <span>Click here to like the video you see, and leave a comment</span>
-      </span>
+      <span style="direction: ltr;">👍💬 Like the video you see, and leave a comment</span>
     </a>
   </div>
 
   <div class="final-section">
-    <div id="finalMessage" class="final-message">❌ Complete the steps first to unlock the download links</div>
-    <div class="final-buttons">
-      <a id="btnDownload" href="#" onclick="goToDownload(); return false;">🔒 Click here to download Roblox mod</a>
-      <a id="btnRobux" href="#" onclick="goToRobux(); return false;">🔒 Click here to learn how to get free Robux</a>
+    <div id="finalMessage" class="final-message">❌ Please complete all steps first</div>
+    <div class="final-buttons" id="finalButtons">
+      <a id="btnDownload" href="#" onclick="goToDownload(); return false;">🔒 Download Roblox Mod</a>
+      <a id="btnRobux" href="#" onclick="goToRobux(); return false;">🔒 Get Free Robux</a>
     </div>
   </div>
 
@@ -232,33 +225,43 @@
       setTimeout(() => {
         document.getElementById('step' + step).classList.add('completed');
         checkSpan.innerText = '✅';
+
         const nextStep = document.getElementById('step' + (step + 1));
         if (nextStep) {
           nextStep.classList.add('active');
         }
+
+        updateProgress(step);
         unlockButtons();
-      }, 6000);
+      }, 10000);
     }
 
     function rotateStepLinks(step) {
       const checkSpan = document.getElementById('check' + step);
-      const index = Math.floor(Math.random() * step3Links.length);
-      const selectedURL = step3Links[index];
+      const selectedURL = step3Links[Math.floor(Math.random() * step3Links.length)];
       checkSpan.innerHTML = '<span class="loading"></span>';
       window.open(selectedURL, '_blank');
       setTimeout(() => {
         document.getElementById('step' + step).classList.add('completed');
         checkSpan.innerText = '✅';
+
+        updateProgress(step);
         unlockButtons();
-      }, 6000);
+      }, 10000);
+    }
+
+    function updateProgress(step) {
+      const bar = document.getElementById('progressBar');
+      bar.style.width = `${(step / 3) * 100}%`;
     }
 
     function unlockButtons() {
-      const allCompleted = [...Array(3).keys()].every(i =>
-        document.getElementById('step' + (i + 1)).classList.contains('completed')
+      const allCompleted = [1, 2, 3].every(i =>
+        document.getElementById('step' + i).classList.contains('completed')
       );
+
       if (allCompleted) {
-        document.getElementById('finalMessage').innerText = '✅ All steps have been completed successfully';
+        document.getElementById('finalMessage').innerText = '✅ !All steps completed';
         document.getElementById('finalMessage').style.color = 'lime';
 
         const btnDownload = document.getElementById('btnDownload');
@@ -267,8 +270,9 @@
         btnDownload.classList.add('active');
         btnRobux.classList.add('active');
 
-        btnDownload.innerText = '🔓 Click here to download Roblox mod';
-        btnRobux.innerText = '🔓 Click here to learn how to get free Robux';
+        // ✅ تغيير القفل إلى مفتوح
+        btnDownload.innerHTML = '🔓 Download Roblox Mod';
+        btnRobux.innerHTML = '🔓 Get Free Robux';
       }
     }
 
