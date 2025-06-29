@@ -212,11 +212,46 @@
   </div>
 
   <script>
+    const STEP_EXPIRY_MS = 30 * 60 * 1000; // نصف ساعة
     const step3Links = [
       "https://youtu.be/FTTaDqNpMNw?si=QHJMadMz2UMHwDte",
       "https://youtu.be/e2reNnDwKjU?si=EypS11tUO2siJv31",
       "https://youtu.be/Tmv5OnfCg_s?si=BF9w8FbOroRhlS_O"
     ];
+
+    const savedState = JSON.parse(localStorage.getItem("stepsState") || "{}");
+    const isStateExpired = () => {
+      if (!savedState.timestamp) return true;
+      return Date.now() - savedState.timestamp > STEP_EXPIRY_MS;
+    };
+
+    window.onload = () => {
+      if (!isStateExpired()) {
+        for (let i = 1; i <= 3; i++) {
+          if (savedState['step' + i]) {
+            document.getElementById('step' + i).classList.add('completed');
+            document.getElementById('check' + i).innerText = '✅';
+            const nextStep = document.getElementById('step' + (i + 1));
+            if (nextStep) {
+              nextStep.classList.add('active');
+            }
+          } else {
+            break;
+          }
+        }
+        unlockButtons();
+        updateProgress(savedState);
+      } else {
+        localStorage.removeItem("stepsState");
+      }
+    };
+
+    function saveStepState(step) {
+      const current = JSON.parse(localStorage.getItem("stepsState") || "{}");
+      current['step' + step] = true;
+      current.timestamp = Date.now();
+      localStorage.setItem("stepsState", JSON.stringify(current));
+    }
 
     function completeStep(step, url) {
       const checkSpan = document.getElementById('check' + step);
@@ -231,7 +266,8 @@
           nextStep.classList.add('active');
         }
 
-        updateProgress(step);
+        saveStepState(step);
+        updateProgress();
         unlockButtons();
       }, 10000);
     }
@@ -244,15 +280,20 @@
       setTimeout(() => {
         document.getElementById('step' + step).classList.add('completed');
         checkSpan.innerText = '✅';
-
-        updateProgress(step);
+        saveStepState(step);
+        updateProgress();
         unlockButtons();
       }, 10000);
     }
 
-    function updateProgress(step) {
-      const bar = document.getElementById('progressBar');
-      bar.style.width = `${(step / 3) * 100}%`;
+    function updateProgress() {
+      let completed = 0;
+      for (let i = 1; i <= 3; i++) {
+        if (document.getElementById('step' + i).classList.contains('completed')) {
+          completed++;
+        }
+      }
+      document.getElementById('progressBar').style.width = `${(completed / 3) * 100}%`;
     }
 
     function unlockButtons() {
@@ -270,7 +311,6 @@
         btnDownload.classList.add('active');
         btnRobux.classList.add('active');
 
-        // ✅ تغيير القفل إلى مفتوح
         btnDownload.innerHTML = '🔓 Download Roblox Mod';
         btnRobux.innerHTML = '🔓 Get Free Robux';
       }
