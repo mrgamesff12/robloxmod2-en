@@ -231,6 +231,13 @@
           if (savedState['step' + i]) {
             document.getElementById('step' + i).classList.add('completed');
             document.getElementById('check' + i).innerText = '✅';
+
+// 👇 هذا هو الكود الجديد ليبقى الزر معطل بعد التحديث
+        const a = document.getElementById('step' + i).querySelector('a');
+        a.style.pointerEvents = 'none';
+        a.style.opacity = '0.5';
+
+
             const nextStep = document.getElementById('step' + (i + 1));
             if (nextStep) {
               nextStep.classList.add('active');
@@ -261,6 +268,13 @@
         document.getElementById('step' + step).classList.add('completed');
         checkSpan.innerText = '✅';
 
+ // كود يقوم بمنع الضغط علي الزر مجددا عند تنفيذ الخطوه
+  const a = document.getElementById('step' + step).querySelector('a');
+  a.style.pointerEvents = 'none';
+  a.style.opacity = '0.5';
+
+
+
         const nextStep = document.getElementById('step' + (step + 1));
         if (nextStep) {
           nextStep.classList.add('active');
@@ -280,6 +294,13 @@
       setTimeout(() => {
         document.getElementById('step' + step).classList.add('completed');
         checkSpan.innerText = '✅';
+
+ // كود يقوم بمنع الضغط علي الزر مجددا عند تنفيذ الخطوه
+  const a = document.getElementById('step' + step).querySelector('a');
+  a.style.pointerEvents = 'none';
+  a.style.opacity = '0.5';
+
+
         saveStepState(step);
         updateProgress();
         unlockButtons();
