@@ -4,12 +4,8 @@
   <meta charset="UTF-8">
   <title>robloxmod</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: 'Tahoma', sans-serif;
@@ -21,19 +17,16 @@
       background-size: 400% 400%;
       animation: gradientBG 15s ease infinite;
     }
-
     @keyframes gradientBG {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
     h2 {
       font-size: 24px;
       margin-bottom: 20px;
       color: #0ff;
     }
-
     .progress-bar-container {
       width: 90%;
       max-width: 360px;
@@ -43,14 +36,12 @@
       margin: 20px auto;
       overflow: hidden;
     }
-
     .progress-bar {
       height: 100%;
       width: 0%;
       background: lime;
       transition: width 0.4s ease;
     }
-
     .step {
       display: none;
       align-items: center;
@@ -67,21 +58,15 @@
       transform: translateY(20px);
       animation: fadeInUp 0.6s ease forwards;
     }
-
-    .step.active {
-      display: flex;
-    }
-
+    .step.active { display: flex; }
     .step.completed {
       border-color: lime;
       background-color: #141414;
     }
-
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     a {
       color: white;
       text-decoration: none;
@@ -90,7 +75,6 @@
       width: 100%;
       justify-content: space-between;
     }
-
     .loading {
       display: inline-block;
       width: 16px;
@@ -100,22 +84,18 @@
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
-
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-
     .final-section {
       margin-top: 30px;
     }
-
     .final-message {
       font-size: 18px;
       margin-bottom: 10px;
       color: red;
     }
-
     .final-buttons {
       background: #111;
       border-radius: 12px;
@@ -125,7 +105,6 @@
       margin: auto;
       box-shadow: 0 0 10px #0ff3;
     }
-
     .final-buttons a {
       display: block;
       background-color: #555;
@@ -142,21 +121,16 @@
       opacity: 0.5;
       transition: 0.3s;
     }
-
     .final-buttons a.active {
       background-color: #0c0;
       pointer-events: auto;
       opacity: 1;
     }
-
     .final-buttons a#btnRobux.active {
       background-color: dodgerblue;
     }
-
     @media (max-width: 480px) {
-      body {
-        padding: 20px 2vw;
-      }
+      body { padding: 20px 2vw; }
       .step, .final-buttons {
         max-width: 100%;
         padding: 12px 5vw;
@@ -165,165 +139,159 @@
         font-size: 15px;
         padding: 12px 5px;
       }
-      h2 {
-        font-size: 20px;
-      }
-      .final-message {
-        font-size: 15px;
-      }
+      h2 { font-size: 20px; }
+      .final-message { font-size: 15px; }
     }
   </style>
 </head>
 <body>
 
-  <h2>Complete these steps to unlock the download links</h2>
+<h2>Complete these steps to unlock the download links</h2>
 
-  <div class="progress-bar-container">
-    <div id="progressBar" class="progress-bar"></div>
+<div class="progress-bar-container">
+  <div id="progressBar" class="progress-bar"></div>
+</div>
+
+<div id="step1" class="step active">
+  <a href="#" onclick="completeStep(1, 'https://www.youtube.com/@MRGAMESFF-k3q'); return false;">
+    <span id="check1">➡️</span>
+    <span style="direction: ltr;">📺🔔 Subscribe to Channel 1, and turn on the notification bell </span>
+  </a>
+</div>
+
+<div id="step2" class="step">
+  <a href="#" onclick="completeStep(2, 'https://www.youtube.com/@DarkPanda-DP'); return false;">
+    <span id="check2">➡️</span>
+    <span style="direction: ltr;">📺🔔 Subscribe to Channel 2, and turn on the notification bell</span>
+  </a>
+</div>
+
+<div id="step3" class="step">
+  <a href="#" onclick="rotateStepLinks(3); return false;">
+    <span id="check3">➡️</span>
+    <span style="direction: ltr;">👍💬 Like the video you see, and leave a comment</span>
+  </a>
+</div>
+
+<div class="final-section">
+  <div id="finalMessage" class="final-message">❌ Please complete all steps first</div>
+  <div class="final-buttons" id="finalButtons">
+    <a id="btnDownload" href="#" onclick="goToDownload(); return false;">🔒 Download Roblox Mod</a>
+    <a id="btnRobux" href="#" onclick="goToRobux(); return false;">🔒 Get Free Robux</a>
   </div>
+</div>
 
-  <div id="step1" class="step active">
-    <a href="#" onclick="completeStep(1, 'https://www.youtube.com/@MRGAMESFF-k3q'); return false;">
-      <span id="check1">➡️</span>
-      <span style="direction: ltr;">📺🔔 Subscribe to Channel 1, and turn on the notification bell </span>
-    </a>
-  </div>
+<script>
+  const STEP_EXPIRY_MS = 365 * 24 * 60 * 60 * 1000; // سنة كاملة
+  const step3Links = [
+    "https://youtu.be/FTTaDqNpMNw?si=QHJMadMz2UMHwDte",
+    "https://youtu.be/e2reNnDwKjU?si=EypS11tUO2siJv31",
+    "https://youtu.be/Tmv5OnfCg_s?si=BF9w8FbOroRhlS_O"
+  ];
 
-  <div id="step2" class="step">
-    <a href="#" onclick="completeStep(2, 'https://www.youtube.com/@DarkPanda-DP'); return false;">
-      <span id="check2">➡️</span>
-      <span style="direction: ltr;">📺🔔 Subscribe to Channel 2, and turn on the notification bell</span>
-    </a>
-  </div>
+  const step3StorageKey = 'step3State_robloxmod'; // معرف خاص بالخطوة 3
+  const savedState = JSON.parse(localStorage.getItem("stepsState") || "{}");
+  const step3State = JSON.parse(localStorage.getItem(step3StorageKey) || "{}");
 
-  <div id="step3" class="step">
-    <a href="#" onclick="rotateStepLinks(3); return false;">
-      <span id="check3">➡️</span>
-      <span style="direction: ltr;">👍💬 Like the video you see, and leave a comment</span>
-    </a>
-  </div>
+  const isStateExpired = () => {
+    if (!savedState.timestamp) return true;
+    return Date.now() - savedState.timestamp > STEP_EXPIRY_MS;
+  };
 
-  <div class="final-section">
-    <div id="finalMessage" class="final-message">❌ Please complete all steps first</div>
-    <div class="final-buttons" id="finalButtons">
-      <a id="btnDownload" href="#" onclick="goToDownload(); return false;">🔒 Download Roblox Mod</a>
-      <a id="btnRobux" href="#" onclick="goToRobux(); return false;">🔒 Get Free Robux</a>
-    </div>
-  </div>
-
-  <script>
-    const STEP_EXPIRY_MS = 24 * 60 * 60 * 1000; // يوم كامل
-    const step3Links = [
-      "https://youtu.be/FTTaDqNpMNw?si=QHJMadMz2UMHwDte",
-      "https://youtu.be/e2reNnDwKjU?si=EypS11tUO2siJv31",
-      "https://youtu.be/Tmv5OnfCg_s?si=BF9w8FbOroRhlS_O"
-    ];
-
-    const savedState = JSON.parse(localStorage.getItem("stepsState") || "{}");
-    const isStateExpired = () => {
-      if (!savedState.timestamp) return true;
-      return Date.now() - savedState.timestamp > STEP_EXPIRY_MS;
-    };
-
-    window.onload = () => {
-      if (!isStateExpired()) {
-        for (let i = 1; i <= 3; i++) {
-          if (savedState['step' + i]) {
-            document.getElementById('step' + i).classList.add('completed');
-            document.getElementById('check' + i).innerText = '✅';
-            const nextStep = document.getElementById('step' + (i + 1));
-            if (nextStep) {
-              nextStep.classList.add('active');
-            }
-          } else {
-            break;
-          }
-        }
-        unlockButtons();
-        updateProgress(savedState);
-      } else {
-        localStorage.removeItem("stepsState");
+  window.onload = () => {
+    if (!isStateExpired()) {
+      for (let i = 1; i <= 2; i++) {
+        if (savedState['step' + i]) {
+          document.getElementById('step' + i).classList.add('completed');
+          document.getElementById('check' + i).innerText = '✅';
+          const nextStep = document.getElementById('step' + (i + 1));
+          if (nextStep) nextStep.classList.add('active');
+        } else break;
       }
-    };
 
-    function saveStepState(step) {
-      const current = JSON.parse(localStorage.getItem("stepsState") || "{}");
-      current['step' + step] = true;
-      current.timestamp = Date.now();
-      localStorage.setItem("stepsState", JSON.stringify(current));
-    }
-
-    function completeStep(step, url) {
-      const checkSpan = document.getElementById('check' + step);
-      checkSpan.innerHTML = '<span class="loading"></span>';
-      window.open(url, '_blank');
-      setTimeout(() => {
-        document.getElementById('step' + step).classList.add('completed');
-        checkSpan.innerText = '✅';
-
-        const nextStep = document.getElementById('step' + (step + 1));
-        if (nextStep) {
-          nextStep.classList.add('active');
-        }
-
-        saveStepState(step);
-        updateProgress();
-        unlockButtons();
-      }, 10000);
-    }
-
-    function rotateStepLinks(step) {
-      const checkSpan = document.getElementById('check' + step);
-      const selectedURL = step3Links[Math.floor(Math.random() * step3Links.length)];
-      checkSpan.innerHTML = '<span class="loading"></span>';
-      window.open(selectedURL, '_blank');
-      setTimeout(() => {
-        document.getElementById('step' + step).classList.add('completed');
-        checkSpan.innerText = '✅';
-        saveStepState(step);
-        updateProgress();
-        unlockButtons();
-      }, 10000);
-    }
-
-    function updateProgress() {
-      let completed = 0;
-      for (let i = 1; i <= 3; i++) {
-        if (document.getElementById('step' + i).classList.contains('completed')) {
-          completed++;
-        }
+      if (step3State.completed) {
+        document.getElementById('step3').classList.add('completed');
+        document.getElementById('check3').innerText = '✅';
+      } else if (savedState.step2) {
+        document.getElementById('step3').classList.add('active');
       }
-      document.getElementById('progressBar').style.width = `${(completed / 3) * 100}%`;
+
+      unlockButtons();
+      updateProgress();
+    } else {
+      localStorage.removeItem("stepsState");
+      localStorage.removeItem(step3StorageKey);
     }
+  };
 
-    function unlockButtons() {
-      const allCompleted = [1, 2, 3].every(i =>
-        document.getElementById('step' + i).classList.contains('completed')
-      );
+  function saveStepState(step) {
+    if (step === 3) return;
+    const current = JSON.parse(localStorage.getItem("stepsState") || "{}");
+    current['step' + step] = true;
+    current.timestamp = Date.now();
+    localStorage.setItem("stepsState", JSON.stringify(current));
+  }
 
-      if (allCompleted) {
-        document.getElementById('finalMessage').innerText = '✅ !All steps completed';
-        document.getElementById('finalMessage').style.color = 'lime';
+  function completeStep(step, url) {
+    const checkSpan = document.getElementById('check' + step);
+    checkSpan.innerHTML = '<span class="loading"></span>';
+    window.open(url, '_blank');
+    setTimeout(() => {
+      document.getElementById('step' + step).classList.add('completed');
+      checkSpan.innerText = '✅';
+      const nextStep = document.getElementById('step' + (step + 1));
+      if (nextStep) nextStep.classList.add('active');
+      saveStepState(step);
+      updateProgress();
+      unlockButtons();
+    }, 10000);
+  }
 
-        const btnDownload = document.getElementById('btnDownload');
-        const btnRobux = document.getElementById('btnRobux');
+  function rotateStepLinks(step) {
+    const checkSpan = document.getElementById('check' + step);
+    const selectedURL = step3Links[Math.floor(Math.random() * step3Links.length)];
+    checkSpan.innerHTML = '<span class="loading"></span>';
+    window.open(selectedURL, '_blank');
+    setTimeout(() => {
+      document.getElementById('step' + step).classList.add('completed');
+      checkSpan.innerText = '✅';
+      localStorage.setItem(step3StorageKey, JSON.stringify({ completed: true, timestamp: Date.now() }));
+      updateProgress();
+      unlockButtons();
+    }, 10000);
+  }
 
-        btnDownload.classList.add('active');
-        btnRobux.classList.add('active');
-
-        btnDownload.innerHTML = '🔓 Download Roblox Mod';
-        btnRobux.innerHTML = '🔓 Get Free Robux';
-      }
+  function updateProgress() {
+    let completed = 0;
+    for (let i = 1; i <= 3; i++) {
+      if (document.getElementById('step' + i).classList.contains('completed')) completed++;
     }
+    document.getElementById('progressBar').style.width = `${(completed / 3) * 100}%`;
+  }
 
-    function goToDownload() {
-      window.open('https://linkjust.com/eYX2RE', '_blank');
-    }
+  function unlockButtons() {
+    const allCompleted = [1, 2, 3].every(i =>
+      document.getElementById('step' + i).classList.contains('completed')
+    );
 
-    function goToRobux() {
-      window.open('https://darkpanda-dp.blogspot.com/2025/06/how-to-get-1000-robux-in-roblox-for-free.html', '_blank');
+    if (allCompleted) {
+      document.getElementById('finalMessage').innerText = '✅ !All steps completed';
+      document.getElementById('finalMessage').style.color = 'lime';
+      document.getElementById('btnDownload').classList.add('active');
+      document.getElementById('btnRobux').classList.add('active');
+      document.getElementById('btnDownload').innerHTML = '🔓 Download Roblox Mod';
+      document.getElementById('btnRobux').innerHTML = '🔓 Get Free Robux';
     }
-  </script>
+  }
+
+  function goToDownload() {
+    window.open('https://linkjust.com/4oDvq0Q8', '_blank');
+  }
+
+  function goToRobux() {
+    window.open('https://darkpanda-dp.blogspot.com/2025/06/how-to-get-1000-robux-in-roblox-for-free.html', '_blank');
+  }
+</script>
 
 </body>
 </html>
